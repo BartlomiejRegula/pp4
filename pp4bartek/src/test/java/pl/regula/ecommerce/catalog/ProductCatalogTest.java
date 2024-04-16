@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.*;
 public class ProductCatalogTest {
     @Test
     void itListsProducts(){
-        ProductCatalog catalog = new ProductCatalog();
+        ProductCatalog catalog = getProductCatalog();
 
         List<Product> productList = catalog.allProducts();
 
@@ -21,23 +21,29 @@ public class ProductCatalogTest {
     }
     @Test
     void itAllowsToaddProducts(){
-        ProductCatalog catalog = new ProductCatalog();
+        ProductCatalog catalog = getProductCatalog();
 
         List<Product> productList = catalog.allProducts();
         assertThat(productList).hasSize(0);
     }
     @Test
     void itLoadsProductDetalis(){
-        ProductCatalog catalog = new ProductCatalog();
+        ProductCatalog catalog = getProductCatalog();
         String id = catalog.addProduct("Lego set 8083","Nice");
 
-        List<Product> productList = catalog.allProducts();
-        Thread loadedProduct = null;
-        assertThat(id).isEqualTo(loadedProduct.getId());
+       Product loaded = catalog.getProductBy(id);
+
+        assertThat(id).isEqualTo(loaded.getId());
     }
+
+    private static ProductCatalog getProductCatalog() {
+        ProductCatalog catalog = new ProductCatalog(new ArrayListProductStorage());
+        return catalog;
+    }
+
     @Test
     void itAllowsToChangePrice(){
-        ProductCatalog catalog = new ProductCatalog();
+        ProductCatalog catalog = getProductCatalog();
         String id = catalog.addProduct("Lego set 8083","Nice");
 
         catalog.changePrice(id, BigDecimal.valueOf(10.10));
