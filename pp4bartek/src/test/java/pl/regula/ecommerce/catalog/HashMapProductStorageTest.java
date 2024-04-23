@@ -22,11 +22,11 @@ public class HashMapProductStorageTest {
                 .contains(EXAMPLE_PRODUCT_NAME);
     }
 
-    private Product thereIsProductStorage(){
+    private Product thereIsExampleProduct(){
         var p = new Product(UUID.randomUUID(), EXAMPLE_PRODUCT_NAME, "some des");
                 return p;
     }
-    private ProductStorage thereIsExampleProduct(){
-        return new HashMapProductStorageTest();
+    private ProductStorage thereIsProductStorage (){
+        return new ArrayListProductStorage();
     }
 }
