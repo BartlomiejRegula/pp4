@@ -1,3 +1,16 @@
+const getCurrentOffer = () => {
+    return fetch("/api/current-offer")
+        .then(response => response.json());
+}
+
+const refreshOffer = () => {
+    const offerTotalEl = documet.querySelector("#offerTotal");
+    const offerItemsCountEl = document.querySelector("#offerItemsCount")
+
+    offerTotalEl.textContent = offer.total;
+    
+}
+
 const getProducts = ()  => {
     return fetch("/api/products")
         .then(response => response.json());
