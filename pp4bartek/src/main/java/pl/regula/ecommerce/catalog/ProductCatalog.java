@@ -1,39 +1,35 @@
 package pl.regula.ecommerce.catalog;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 public class ProductCatalog {
 
-    private ProductStorage productStorage;
+    private final ProductStorage productStorage;
 
     public ProductCatalog(ProductStorage productStorage) {
-
         this.productStorage = productStorage;
-
     }
 
+    public List<Product> allProducts() {
+        return productStorage.allProducts();
+    }
 
-    public String addProduct(String name, String description){
+    public String addProduct(String name, String description) {
         UUID id = UUID.randomUUID();
         Product newProduct = new Product(id, name, description);
-
         productStorage.add(newProduct);
-        return id.toString();
-    }
 
-    public void changePrice(String id, BigDecimal bigDecimal) {
-        Product product = getProductBy(id);
-        product.changePrice(bigDecimal);
-
-
+        return newProduct.getId();
     }
 
     public Product getProductBy(String id) {
         return productStorage.getProductBy(id);
     }
 
-    public List<Product> allProducts() {
-        return productStorage.allProducts();
+    public void changePrice(String id, BigDecimal newPrice) {
+        Product loaded = productStorage.getProductBy(id);
+        loaded.changePrice(newPrice);
     }
 }

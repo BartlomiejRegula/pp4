@@ -1,32 +1,46 @@
+
 package pl.regula.creditcard;
 
 import java.math.BigDecimal;
 
 public class CreditCard {
     private BigDecimal creditLimit;
+    private BigDecimal balance;
 
-    public void assignCreditLimit(BigDecimal creditLimit) {
-        if (isCreditAlreadyAssigned()){
-            throw new CreditCantBeReassignException();
+    public void assignCredit(BigDecimal creditLimit) {
+        if (isCreditAlreadyAssigned()) {
+            throw new CreditAlreadyAssignedException();
         }
 
-        if (isCreditBelowTreshold(creditLimit)) {
+        if (isCreditBelowThreshold(creditLimit)) {
             throw new CreditBelowThresholdException();
         }
+
         this.creditLimit = creditLimit;
+        this.balance = creditLimit;
     }
 
     private boolean isCreditAlreadyAssigned() {
-        return this.creditLimit !=null;
+        return this.creditLimit != null;
     }
 
-    private boolean isCreditBelowTreshold(BigDecimal creditLimit) {
-        return creditLimit.compareTo(BigDecimal.valueOf(100)) < 0;
-
+    private boolean isCreditBelowThreshold(BigDecimal creditLimit) {
+        return BigDecimal.valueOf(100).compareTo(creditLimit) > 0;
     }
 
     public BigDecimal getBalance() {
-        return  creditLimit;
+        return balance;
     }
 
+    public void pay(BigDecimal money) {
+        if (!canAfford(money)) {
+            throw new NotEnoughMoneyException();
+        }
+
+        this.balance = this.balance.subtract(money);
+    }
+
+    private boolean canAfford(BigDecimal money) {
+        return this.balance.subtract(money).compareTo(BigDecimal.ZERO) > 0;
+    }
 }

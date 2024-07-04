@@ -1,3 +1,19 @@
-body {
-background yellow
+.products {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.product {
+    border-top: 1px solid #452b2b;
+
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #af2828;
+}
+
+.product__price {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 }
